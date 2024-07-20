@@ -5,6 +5,7 @@ import messageRoutes from './routes/messages.routes.js';
 import userRoutes from './routes/users.routes.js';
 import connectDb from './db/db.js';
 import cookieParser from 'cookie-parser';
+import bodyParser from "body-parser";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -13,6 +14,7 @@ dotenv.config();
 
 app.use(express.json()); // to parse incoming requests with payload;
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);

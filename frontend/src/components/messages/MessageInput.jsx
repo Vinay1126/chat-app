@@ -5,17 +5,19 @@ import useSendMessage from "../../hooks/useSendMessage";
 const MessageInput = () => {
 
 	const [message, setMessage] = useState("");
-	const {loading, sendMessage} = useSendMessage();
+	const {sendMessage, loading} = useSendMessage();
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if(!message) return;
+		// console.log(message)
 		await sendMessage(message);
 		setMessage("");
 	}
 
 	return (
 		<form className='px-4 my-3' onSubmit={handleSubmit}>
-			<div className='w-full'>
+			<div className='relative w-full'>
 				<input
 					type='text'
 					className='border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white'
