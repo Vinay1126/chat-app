@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { toast } from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 
@@ -7,7 +7,7 @@ const useLogin = () => {
   const {setAuthUser} = useAuthContext()
 
   const login = async (username, password) => {
-    const success = handleInputErrors({username, password})
+    const success = handleInputErrors(username, password)
 
     if(!success) return;
     setLoading(true);
@@ -15,7 +15,7 @@ const useLogin = () => {
         const res = await fetch("/api/auth/login", {
             method : "POST",
             headers : {"Content-Type" : "application/json"},
-            body : JSON.stringify({username, password})
+            body : JSON.stringify({username, password}),
         })
 
         const data = await res.json()
@@ -40,8 +40,8 @@ const useLogin = () => {
 
 export default useLogin
 
-function handleInputErrors({username, password}){
-    if(!username || !password){
+function handleInputErrors(username, password){
+    if(!username){
         toast.error("Please fill all the fields");
         return false;
     }
