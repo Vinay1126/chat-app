@@ -7,9 +7,12 @@ import connectDb from './db/db.js';
 import cookieParser from 'cookie-parser';
 import bodyParser from "body-parser";
 import { app, server } from './socket/socket.js';
+import path from "path"
 
 
 const PORT = process.env.PORT || 5000;
+
+const __diname = path.resolve();
 
 dotenv.config();
 
@@ -21,10 +24,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
-// app.get("/", (req, res) => {
-//     res.send("Hello world!");
-// })
+app.use(express.static(path.join(__diname, "/frontend/dist")))
 
+app.get("*", (req, res) => {
+    req.sendFile(path.join(__diname, "frontend", "dist", "index.html"))
+})
 
 
 server.listen(PORT, () => {
